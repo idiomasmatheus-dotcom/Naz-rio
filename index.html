@@ -250,6 +250,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .correction-tip{background:var(--orange-bg);border-left:3px solid var(--orange);padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.81rem;color:var(--text);line-height:1.5}
 .ai-inline-fallback{background:#fff9ed;border:1.5px solid var(--orange-light);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:var(--text);display:none;margin-top:6px}
 .ai-inline-fallback a{color:var(--navy);font-weight:700}
+.ai-hint{font-size:0.76rem;color:var(--muted);line-height:1.55;padding:8px 10px;background:#f8faff;border-radius:6px;border:1px dashed var(--border);margin-bottom:8px}
 .btn-practice{background:transparent;color:var(--navy);border:1.5px solid var(--navy);border-radius:6px;padding:5px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px}
 .btn-practice:hover{background:var(--navy);color:#fff}
 .btn-practice.active{background:var(--navy);color:#fff}
@@ -349,9 +350,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
       </div>
       <div class="settings-section-title" style="margin-top:20px">Correção com IA</div>
       <div class="settings-field">
-        <label>Chave Gemini (Google AI)</label>
-        <input type="password" id="cfg-gemini-key" placeholder="AIza...">
-        <p>Gratuita em <strong>aistudio.google.com</strong> → Get API key. Fica salva só neste navegador, nunca é enviada a terceiros.</p>
+        <p style="background:#fff9ed;border-left:3px solid #f5a000;padding:10px 14px;border-radius:0 8px 8px 0;font-size:0.83rem;line-height:1.6;margin:0">
+          ✨ Ao clicar em <strong>Verificar com IA</strong>, o prompt já vai copiado para o seu clipboard e o Claude.ai abre automaticamente. Basta colar e enviar.
+        </p>
       </div>
       <button id="settings-save" onclick="saveSettings()">💾 Salvar configurações</button>
     </div>
@@ -847,7 +848,6 @@ let state = {
   answers: {},     // "M-D": string — student typed/recorded answer
   feedback: {},    // "M-D": string — AI feedback received
   startDate: null,
-  geminiKey: ""
 };
 
 function loadState(){
@@ -1026,6 +1026,9 @@ function renderActivities(m){
         <div class="practice-controls">
           <button class="mic-btn" id="mic-${key}" onclick="toggleMic('${key}')">🎤 Gravar</button>
           <button class="btn-check-inline" id="aibtn-${key}" onclick="checkInline('${key}','${skill}')">✨ Verificar com IA</button>
+        </div>
+        <div class="ai-hint">
+          💡 Ao clicar em <strong>Verificar com IA</strong>, sua resposta será copiada automaticamente e o Claude.ai abrirá em uma nova aba. Basta colar (<strong>Ctrl+V</strong> no PC · <strong>⌘+V</strong> no Mac · pressione e segure no celular) e enviar para receber a correção.
         </div>
         <div class="ai-inline-loading" id="aiload-${key}"><div class="spinner"></div><span>Verificando com a IA...</span></div>
         <div class="ai-inline-response" id="airesp-${key}" style="${savedFeedback?"display:block":"display:none"}">${savedFeedback?renderInlineCorrection(savedFeedback):""}</div>
@@ -1336,60 +1339,25 @@ async function checkInline(key,skill){
 
   const prompt=generatePrompt(task,answer);
 
-  const apiKey=state.geminiKey||"";
-  if(!apiKey){
-    if(respEl){
-      respEl.innerHTML=`<div class="correction-tip" style="border-left-color:#f5a000;background:#fff9ed">
-        🔑 <strong>Configure sua chave Gemini.</strong><br>
-        Clique em <strong>⚙ Config</strong> no topo da página, cole sua chave do <a href="https://aistudio.google.com" target="_blank" style="color:#1e3558;font-weight:700">Google AI Studio</a> e salve.
-      </div>`;
-      respEl.style.display="block";
-    }
-    if(loadEl) loadEl.classList.remove("active");
-    if(btn) btn.disabled=false;
-    return;
-  }
+  try{ await navigator.clipboard.writeText(prompt); }catch(e){}
 
-  try{
-    const resp=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        contents:[{parts:[{text:prompt}]}],
-        generationConfig:{maxOutputTokens:1500}
-      })
-    });
-    const data=await resp.json();
-    if(!resp.ok){
-      const msg=data?.error?.message||"HTTP "+resp.status;
-      throw new Error(msg);
-    }
-    const text=data.candidates[0].content.parts[0].text;
-    if(!state.feedback) state.feedback={};
-    state.feedback[key]=text;
-    saveState();
-    if(respEl){respEl.innerHTML=renderInlineCorrection(text); respEl.style.display="block";}
-    if(loadEl) loadEl.classList.remove("active");
-    if(btn) btn.disabled=false;
-    return;
-  }catch(e){
-    if(respEl){
-      respEl.innerHTML=`<div class="correction-tip" style="border-left-color:#dc2626;background:#fff5f5">
-        ⚠️ <strong>Erro ao conectar ao Gemini.</strong><br>
-        <code style="font-size:0.78rem;color:#dc2626">${esc(e.message)}</code><br><br>
-        Verifique se sua chave está correta em <strong>⚙ Config</strong>.
-      </div>`;
-      respEl.style.display="block";
-    }
-    if(loadEl) loadEl.classList.remove("active");
-    if(btn) btn.disabled=false;
+  window.open("https://claude.ai","_blank");
+
+  if(respEl){
+    respEl.innerHTML=`<div class="correction-tip" style="border-left-color:#f5a000;background:#fff9ed;line-height:1.7">
+      📋 <strong>Prompt copiado!</strong> O Claude.ai abriu em outra aba.<br>
+      <span style="color:#6b7c93">Cole com <kbd style="background:#eee;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-size:0.85em">Ctrl+V</kbd>
+      (ou <kbd style="background:#eee;border:1px solid #ccc;border-radius:3px;padding:1px 5px;font-size:0.85em">⌘+V</kbd> no Mac/iPhone) e envie.</span>
+    </div>`;
+    respEl.style.display="block";
   }
+  if(loadEl) loadEl.classList.remove("active");
+  if(btn) btn.disabled=false;
 }
 
 // ─── SETTINGS ───────────────────────────────────────────────────────────────
 function openSettings(){
   document.getElementById("cfg-start-date").value=state.startDate||"";
-  document.getElementById("cfg-gemini-key").value=state.geminiKey||"";
   document.getElementById("settings-modal").classList.add("open");
 }
 function closeSettings(){
@@ -1397,7 +1365,6 @@ function closeSettings(){
 }
 function saveSettings(){
   state.startDate=document.getElementById("cfg-start-date").value;
-  state.geminiKey=document.getElementById("cfg-gemini-key").value;
   saveState();
   closeSettings();
   toast("✅ Configurações salvas!");
