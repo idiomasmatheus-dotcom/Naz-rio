@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotina de Inglês 365 Dias — Prof. Matheus Nazário</title>
+<style>
+:root {
+  --navy: #1e3558;
+  --navy-dark: #152844;
+  --navy-light: #2a4a78;
+  --orange: #f5a000;
+  --orange-light: #ffd166;
+  --orange-bg: rgba(245,160,0,0.10);
+  --white: #ffffff;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #1a2535;
+  --muted: #6b7c93;
+  --border: #e0e8f0;
+  --success: #22c55e;
+  --V: #16a34a; --G: #2563eb; --L: #db2777;
+  --S: #ea580c; --R: #7c3aed; --W: #0891b2;
+  --F: #f59e0b; --Rev: #64748b;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(30,53,88,0.10);
+  --shadow-lg: 0 8px 32px rgba(30,53,88,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+/* TOPBAR */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--navy);color:#fff;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg)}
+#topbar-brand{display:flex;align-items:center;gap:12px}
+#topbar-brand .logo-text{font-size:1.05rem;font-weight:700;letter-spacing:0.02em}
+#topbar-brand .logo-text span{color:var(--orange)}
+#topbar-brand .tagline{font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:1px}
+#topbar-stats{display:flex;align-items:center;gap:18px}
+.stat-chip{background:rgba(255,255,255,0.10);border-radius:8px;padding:5px 12px;text-align:center}
+.stat-chip .val{font-size:1.1rem;font-weight:800;color:var(--orange-light);display:block}
+.stat-chip .lbl{font-size:0.62rem;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.05em}
+#settings-btn{background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.2);color:#fff;cursor:pointer;border-radius:8px;padding:7px 12px;font-size:0.82rem;transition:background 0.2s}
+#settings-btn:hover{background:rgba(255,255,255,0.20)}
+/* PROGRESS BAR */
+#progress-bar-wrap{position:fixed;top:64px;left:0;right:0;z-index:99;height:5px;background:rgba(30,53,88,0.15)}
+#progress-bar{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-light));transition:width 0.6s ease;width:0%}
+/* MONTH NAV */
+#month-nav{position:fixed;top:69px;left:0;right:0;z-index:98;background:var(--navy-dark);padding:0 16px;display:flex;overflow-x:auto;gap:4px;scrollbar-width:none}
+#month-nav::-webkit-scrollbar{display:none}
+.mnav-btn{background:transparent;border:none;color:rgba(255,255,255,0.5);cursor:pointer;padding:10px 14px;font-size:0.78rem;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.04em}
+.mnav-btn:hover{color:rgba(255,255,255,0.85)}
+.mnav-btn.active{color:var(--orange-light);border-bottom-color:var(--orange)}
+/* MAIN */
+#main{margin-top:110px;padding:24px 16px;max-width:900px;margin-left:auto;margin-right:auto}
+/* MONTH SECTION */
+.month-section{display:none}
+.month-section.active{display:block}
+.month-header{background:var(--navy);color:#fff;border-radius:var(--radius);padding:28px 28px 20px;margin-bottom:20px;position:relative;overflow:hidden}
+.month-header::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(245,160,0,0.12)}
+.month-header::after{content:'';position:absolute;bottom:-60px;right:60px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.month-num{font-size:0.72rem;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:4px}
+.month-name{font-size:2.4rem;font-weight:900;letter-spacing:-0.02em;line-height:1}
+.month-theme{font-size:0.88rem;color:rgba(255,255,255,0.65);margin-top:8px}
+.month-progress-text{position:absolute;top:24px;right:28px;font-size:2rem;font-weight:900;color:var(--orange);opacity:0.9}
+.month-progress-sub{position:absolute;top:66px;right:28px;font-size:0.7rem;color:rgba(255,255,255,0.45);text-align:right}
+/* MINIMETAS */
+.minimetas{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.minimetas h3{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy);margin-bottom:14px;font-weight:700}
+.minimetas-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.minimeta-item{border:1.5px solid var(--border);border-radius:8px;padding:12px;border-left:4px solid var(--orange)}
+.minimeta-item label{font-size:0.7rem;color:var(--orange);font-weight:700;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em}
+.minimeta-item input{width:100%;border:none;outline:none;font-size:0.85rem;color:var(--text);background:transparent;padding:2px 0;border-bottom:1px dashed var(--border)}
+.minimeta-item input:focus{border-bottom-color:var(--orange)}
+.minimeta-item input.acao{font-size:0.78rem;color:var(--muted);margin-top:4px}
+/* HABIT TRACKER */
+.habit-tracker{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.habit-tracker h3{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy);margin-bottom:14px;font-weight:700}
+.habit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:nowrap}
+.habit-label{font-size:0.7rem;font-weight:600;min-width:80px;color:var(--muted)}
+.habit-dots{display:flex;gap:3px;flex-wrap:wrap}
+.habit-dot{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.2s;font-size:0;background:transparent;flex-shrink:0}
+.habit-dot.done{background:var(--navy);border-color:var(--navy)}
+.habit-dot:hover{border-color:var(--orange);transform:scale(1.1)}
+/* RESOURCES */
+.resources-section{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.resources-section h3{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy);margin-bottom:14px;font-weight:700}
+.resources-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.resource-link{display:flex;flex-direction:column;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;text-decoration:none;color:var(--navy);transition:all 0.2s}
+.resource-link:hover{border-color:var(--orange);background:var(--orange-bg);transform:translateY(-1px)}
+.resource-link .r-url{font-size:0.8rem;font-weight:700;color:var(--navy)}
+.resource-link .r-desc{font-size:0.72rem;color:var(--muted);margin-top:2px}
+/* ACTIVITIES */
+.activities-card{background:var(--card);border-radius:var(--radius);margin-bottom:16px;box-shadow:var(--shadow);overflow:hidden}
+.activities-header{padding:14px 20px;background:var(--navy);color:#fff;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between}
+.activity-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);transition:background 0.15s;position:relative}
+.activity-row:last-child{border-bottom:none}
+.activity-row.done{background:rgba(34,197,94,0.04)}
+.activity-row.done .activity-task{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(0,0,0,0.2)}
+/* Checkbox */
+.check-circle{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;background:#fff;margin-top:2px}
+.check-circle:hover{border-color:var(--orange);transform:scale(1.05)}
+.check-circle.done{background:var(--success);border-color:var(--success)}
+.check-circle.done::after{content:'✓';color:#fff;font-size:0.9rem;font-weight:700}
+/* Day badge */
+.day-badge{background:var(--navy);color:#fff;border-radius:8px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;flex-shrink:0;margin-top:2px}
+/* Skill badge */
+.skill-badge{border-radius:6px;padding:3px 8px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:#fff;white-space:nowrap;flex-shrink:0;margin-top:4px}
+/* Activity content */
+.activity-content{flex:1;min-width:0}
+.activity-task{font-size:0.88rem;line-height:1.5;color:var(--text);margin-bottom:8px}
+.activity-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-link{background:var(--navy);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s}
+.btn-link:hover{background:var(--navy-light);transform:translateY(-1px)}
+.btn-link .icon{font-size:0.8rem}
+.btn-ai{background:linear-gradient(135deg,var(--orange),#ff8c00);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s}
+.btn-ai:hover{opacity:0.9;transform:translateY(-1px)}
+/* NOTES */
+.notes-section{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-bottom:30px;box-shadow:var(--shadow)}
+.notes-section h3{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy);margin-bottom:12px;font-weight:700}
+.notes-section textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px;font-size:0.85rem;line-height:1.6;resize:vertical;min-height:100px;outline:none;font-family:inherit;color:var(--text);background:#fafcff}
+.notes-section textarea:focus{border-color:var(--orange)}
+/* AI MODAL */
+#ai-modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;padding:16px}
+#ai-modal.open{display:flex}
+#ai-modal-box{background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:slideUp 0.25s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+#ai-modal-header{background:var(--navy);color:#fff;padding:20px 24px;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:flex-start}
+#ai-modal-header h2{font-size:1rem;font-weight:700;margin-bottom:4px}
+#ai-modal-header p{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.4;max-width:420px}
+#ai-modal-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#ai-modal-body{padding:20px 24px}
+#ai-task-display{background:var(--orange-bg);border-left:4px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:16px;font-size:0.85rem;line-height:1.5;color:var(--text)}
+#ai-task-display strong{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--orange);margin-bottom:4px}
+#ai-answer{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px;font-size:0.88rem;line-height:1.6;min-height:120px;resize:vertical;outline:none;font-family:inherit;color:var(--text);margin-bottom:14px}
+#ai-answer:focus{border-color:var(--orange)}
+#ai-answer::placeholder{color:var(--muted)}
+#ai-actions{display:flex;gap:10px;flex-wrap:wrap}
+#btn-correct{background:linear-gradient(135deg,var(--orange),#e08900);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:0.88rem;font-weight:700;cursor:pointer;flex:1;min-width:150px;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+#btn-correct:hover{opacity:0.9}
+#btn-correct:disabled{opacity:0.5;cursor:not-allowed}
+#btn-copy-prompt{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:0.88rem;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+#btn-copy-prompt:hover{opacity:0.85}
+#ai-response{margin-top:16px;display:none}
+#ai-response-box{background:#f8fffe;border:1.5px solid #bbf7d0;border-radius:8px;padding:16px;font-size:0.88rem;line-height:1.7;color:var(--text);white-space:pre-wrap}
+#ai-loading{display:none;align-items:center;gap:10px;padding:16px;color:var(--muted);font-size:0.88rem}
+.spinner{width:20px;height:20px;border:2.5px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#ai-fallback{margin-top:12px;background:#fff9ed;border:1.5px solid var(--orange-light);border-radius:8px;padding:12px 16px;font-size:0.82rem;color:var(--text);display:none}
+#ai-fallback a{color:var(--navy);font-weight:700}
+/* SETTINGS MODAL */
+#settings-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;padding:16px}
+#settings-modal.open{display:flex}
+#settings-box{background:#fff;border-radius:16px;width:100%;max-width:460px;overflow:hidden;box-shadow:var(--shadow-lg);animation:slideUp 0.25s ease}
+#settings-box header{background:var(--navy);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+#settings-box header h2{font-size:1rem;font-weight:700}
+#settings-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem}
+#settings-body{padding:24px}
+.settings-field{margin-bottom:18px}
+.settings-field label{display:block;font-size:0.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+.settings-field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.88rem;outline:none;font-family:inherit}
+.settings-field input:focus{border-color:var(--orange)}
+.settings-field p{font-size:0.76rem;color:var(--muted);margin-top:5px;line-height:1.4}
+#settings-save{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-size:0.9rem;font-weight:700;cursor:pointer;width:100%;transition:opacity 0.2s}
+#settings-save:hover{opacity:0.9}
+.settings-section-title{font-size:0.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.06em;border-bottom:2px solid var(--orange);padding-bottom:6px;margin-bottom:14px}
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:999;transition:transform 0.3s ease;white-space:nowrap;box-shadow:var(--shadow-lg)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+/* LEGEND */
+#legend{background:var(--card);border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#legend span:first-child{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-right:4px}
+/* START BANNER */
+#start-banner{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:#fff;border-radius:var(--radius);padding:24px;margin-bottom:20px;text-align:center}
+#start-banner h1{font-size:1.6rem;font-weight:900;margin-bottom:6px}
+#start-banner h1 span{color:var(--orange)}
+#start-banner p{font-size:0.88rem;color:rgba(255,255,255,0.7);margin-bottom:16px}
+#start-date-wrap{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+#start-date-input{border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:8px 14px;font-size:0.88rem;outline:none}
+#start-date-input::-webkit-calendar-picker-indicator{filter:invert(1)}
+#start-btn{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-weight:700;cursor:pointer;font-size:0.88rem}
+/* Responsive */
+@media(max-width:600px){
+  #topbar{padding:0 12px;height:56px}
+  #topbar-stats{gap:8px}
+  .stat-chip{padding:4px 8px}
+  #month-nav{top:56px}
+  #main{margin-top:100px;padding:12px}
+  .minimetas-grid{grid-template-columns:1fr}
+  .resources-grid{grid-template-columns:1fr}
+  .month-name{font-size:1.8rem}
+  #ai-modal-box{max-height:95vh}
+}
+/* Skill badge colors */
+.skill-V{background:var(--V)} .skill-G{background:var(--G)} .skill-L{background:var(--L)}
+.skill-S{background:var(--S)} .skill-R{background:var(--R)} .skill-W{background:var(--W)}
+.skill-F{background:var(--F)} .skill-Rev{background:var(--Rev)}
+/* PASSWORD SCREEN */
+#password-screen{position:fixed;inset:0;z-index:9999;background:var(--navy);display:flex;align-items:center;justify-content:center;padding:24px}
+#password-screen.hidden{display:none}
+.pw-box{background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.pw-logo{font-size:1.1rem;font-weight:900;color:var(--navy);margin-bottom:4px;letter-spacing:0.01em}
+.pw-logo span{color:var(--orange)}
+.pw-tagline{font-size:0.75rem;color:var(--muted);margin-bottom:28px}
+.pw-title{font-size:1.35rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.pw-subtitle{font-size:0.85rem;color:var(--muted);margin-bottom:24px;line-height:1.45}
+.pw-input-wrap{position:relative;margin-bottom:14px}
+#pw-input{width:100%;border:2px solid var(--border);border-radius:10px;padding:13px 46px 13px 16px;font-size:1rem;outline:none;font-family:inherit;color:var(--text);transition:border-color 0.2s;letter-spacing:0.05em}
+#pw-input:focus{border-color:var(--orange)}
+#pw-input.error{border-color:#dc2626;animation:shake 0.35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+#pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;padding:4px}
+#pw-btn{width:100%;background:linear-gradient(135deg,var(--orange),#e08900);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;margin-bottom:12px}
+#pw-btn:hover{opacity:0.9}
+#pw-error{color:#dc2626;font-size:0.82rem;min-height:18px;margin-bottom:4px}
+.pw-footer{font-size:0.72rem;color:var(--muted);margin-top:8px;line-height:1.5}
+/* PRACTICE PANEL */
+.activity-wrap{border-bottom:1px solid var(--border)}
+.activity-wrap:last-child{border-bottom:none}
+.activity-wrap .activity-row{border-bottom:none}
+.practice-panel{display:none;padding:0 20px 16px 76px;background:#fafcff;border-top:1px solid var(--border)}
+.practice-panel.open{display:block}
+.practice-header{font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:10px;padding-top:12px;display:flex;justify-content:space-between;align-items:center}
+.practice-header .close-panel{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.85rem;padding:2px 6px;border-radius:4px;transition:all 0.15s}
+.practice-header .close-panel:hover{color:var(--navy);background:var(--border)}
+.practice-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;line-height:1.55;min-height:80px;resize:vertical;outline:none;font-family:inherit;color:var(--text);background:#fff;margin-bottom:10px;transition:border-color 0.2s}
+.practice-textarea:focus{border-color:var(--orange)}
+.practice-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.mic-btn{background:var(--navy);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s}
+.mic-btn:hover{background:var(--navy-light)}
+.mic-btn.recording{background:#dc2626;animation:pulse-rec 1.2s ease-in-out infinite}
+@keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.4)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
+.btn-check-inline{background:linear-gradient(135deg,var(--orange),#e08900);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s}
+.btn-check-inline:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-check-inline:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.ai-inline-loading{display:none;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;padding:6px 0}
+.ai-inline-loading.active{display:flex}
+.ai-inline-response{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:8px;padding:14px 16px;font-size:0.84rem;line-height:1.65;color:var(--text);display:none;white-space:pre-wrap}
+.ai-inline-fallback{background:#fff9ed;border:1.5px solid var(--orange-light);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:var(--text);display:none;margin-top:6px}
+.ai-inline-fallback a{color:var(--navy);font-weight:700}
+.btn-practice{background:transparent;color:var(--navy);border:1.5px solid var(--navy);border-radius:6px;padding:5px 12px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px}
+.btn-practice:hover{background:var(--navy);color:#fff}
+.btn-practice.active{background:var(--navy);color:#fff}
+@media(max-width:600px){
+  .practice-panel{padding:0 12px 14px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="password-screen">
+  <div class="pw-box">
+    <div class="pw-logo">Rotina de Inglês <span>365 Dias</span></div>
+    <div class="pw-tagline">Prof. Matheus Nazário</div>
+    <div class="pw-title">🔐 Área do Aluno</div>
+    <div class="pw-subtitle">Digite a senha de acesso que você recebeu após a compra.</div>
+    <div class="pw-input-wrap">
+      <input type="password" id="pw-input" placeholder="Sua senha de acesso..." onkeydown="if(event.key==='Enter')checkPassword()">
+      <button id="pw-toggle" onclick="togglePwVisibility()" title="Mostrar/ocultar">👁</button>
+    </div>
+    <div id="pw-error"></div>
+    <button id="pw-btn" onclick="checkPassword()">Acessar →</button>
+    <div class="pw-footer">Problemas com o acesso? Entre em contato com o suporte.</div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div id="topbar-brand">
+    <div>
+      <div class="logo-text">Rotina de Inglês <span>365 Dias</span></div>
+      <div class="tagline">Inglês com propósito. Resultado real. — Prof. Matheus Nazário</div>
+    </div>
+  </div>
+  <div id="topbar-stats">
+    <div class="stat-chip"><span class="val" id="stat-done">0</span><span class="lbl">Feitos</span></div>
+    <div class="stat-chip"><span class="val" id="stat-streak">0</span><span class="lbl">Sequência</span></div>
+    <div class="stat-chip"><span class="val" id="stat-pct">0%</span><span class="lbl">Progresso</span></div>
+    <button id="settings-btn" onclick="openSettings()">⚙ Config</button>
+  </div>
+</div>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<!-- MONTH NAV -->
+<nav id="month-nav"></nav>
+
+<!-- MAIN -->
+<main id="main">
+  <div id="legend">
+    <span>Legenda:</span>
+  </div>
+  <div id="months-container"></div>
+</main>
+
+<!-- AI MODAL -->
+<div id="ai-modal">
+  <div id="ai-modal-box">
+    <div id="ai-modal-header">
+      <div>
+        <h2>✨ Verificar com IA</h2>
+        <p id="ai-modal-task-label">Escreva sua resposta abaixo e clique em "Corrigir com IA" para receber feedback personalizado.</p>
+      </div>
+      <button id="ai-modal-close" onclick="closeAI()">✕</button>
+    </div>
+    <div id="ai-modal-body">
+      <div id="ai-task-display"><strong>Tarefa do dia</strong><span id="ai-task-text"></span></div>
+      <textarea id="ai-answer" placeholder="Digite sua resposta em inglês aqui...&#10;&#10;Exemplo: My name is Maria. I am 25 years old. I am from Brazil..."></textarea>
+      <div id="ai-actions">
+        <button id="btn-correct" onclick="correctWithAI()">✨ Corrigir com IA</button>
+        <button id="btn-copy-prompt" onclick="copyPrompt()">📋 Copiar prompt</button>
+      </div>
+      <div id="ai-loading"><div class="spinner"></div><span>Aguarde, a IA está corrigindo...</span></div>
+      <div id="ai-fallback">
+        🤖 <strong>Para usar a correção IA:</strong> Copie o prompt acima e cole no <a href="https://claude.ai" target="_blank">Claude.ai</a> ou configure sua chave API nas configurações (⚙ Config). O prompt já está no seu clipboard!
+      </div>
+      <div id="ai-response">
+        <div id="ai-response-box"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settings-modal">
+  <div id="settings-box">
+    <header>
+      <h2>⚙ Configurações</h2>
+      <button id="settings-close" onclick="closeSettings()">✕</button>
+    </header>
+    <div id="settings-body">
+      <div class="settings-section-title">Data de Início</div>
+      <div class="settings-field">
+        <label>Primeiro dia de estudo</label>
+        <input type="date" id="cfg-start-date">
+        <p>Usada para calcular em qual dia você está hoje.</p>
+      </div>
+      <div class="settings-section-title" style="margin-top:20px">Correção com IA</div>
+      <div class="settings-field">
+        <label>Chave de API Anthropic (Claude)</label>
+        <input type="password" id="cfg-api-key" placeholder="sk-ant-...">
+        <p>Opcional. Se informada, a correção acontece diretamente aqui. Sem chave, o prompt é copiado para você usar no Claude.ai. Sua chave fica salva somente neste navegador.</p>
+      </div>
+      <button id="settings-save" onclick="saveSettings()">💾 Salvar configurações</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ─── SENHA DE ACESSO ─────────────────────────────────────────────────────────
+// Troque "ingles365" pela senha que quiser entregar aos alunos
+const ACCESS_PASSWORD = "ingles365";
+const AUTH_KEY = "nazario365_auth";
+const AUTH_DAYS = 60; // dias que o acesso fica salvo no navegador
+
+function checkAuth(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(AUTH_KEY)||"null");
+    if(saved && saved.ok && Date.now() < saved.exp){
+      document.getElementById("password-screen").classList.add("hidden");
+      return;
+    }
+  }catch(e){}
+}
+
+function checkPassword(){
+  const input = document.getElementById("pw-input");
+  const errorEl = document.getElementById("pw-error");
+  const val = input.value.trim();
+
+  if(val === ACCESS_PASSWORD){
+    localStorage.setItem(AUTH_KEY, JSON.stringify({ok:true, exp: Date.now() + AUTH_DAYS*86400000}));
+    document.getElementById("password-screen").classList.add("hidden");
+    errorEl.textContent = "";
+  } else {
+    errorEl.textContent = "❌ Senha incorreta. Tente novamente.";
+    input.classList.add("error");
+    input.value = "";
+    setTimeout(()=>input.classList.remove("error"), 400);
+    input.focus();
+  }
+}
+
+function togglePwVisibility(){
+  const input = document.getElementById("pw-input");
+  const btn = document.getElementById("pw-toggle");
+  if(input.type === "password"){ input.type = "text"; btn.textContent = "🙈"; }
+  else { input.type = "password"; btn.textContent = "👁"; }
+}
+
+checkAuth();
+
+// ─── DATA ───────────────────────────────────────────────────────────────────
+// Format: [day, skillCode, task, url, urlText]
+// Skills: V=Vocabulário G=Gramática L=Listening S=Speaking R=Reading W=Writing F=Fun Rev=Revisão
+
+const MONTHS = [
+{n:1,name:"JANEIRO",theme:"Fundamentos A1 — Apresentações, saudações, verb to be e números",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"F","Troque o idioma de todos os seus eletrônicos para inglês. Esse é o passo zero.",null,null],
+[2,"V","Aprenda 10 saudações: Hello, Hi, Good morning, Good afternoon, Goodbye, See you, Nice to meet you, How are you?, I'm fine, Take care.",null,null],
+[3,"L","Acesse o Lyricstraining e complete a letra de uma música que você já conhece em inglês.","https://lyricstraining.com","lyricstraining.com"],
+[4,"G","Verb To Be: I am, You are, He/She is, We/They are. Escreva 5 frases verdadeiras sobre você.",null,null],
+[5,"S","Pratique em voz alta: What's your name? / My name is... / I'm from Brazil. / I'm [age] years old.",null,null],
+[6,"R","Leia uma notícia curta no News in Levels (nível 1). Leia em voz alta também.","https://newsinlevels.com","newsinlevels.com"],
+[7,"Rev","Revisão da semana 1. Escreva 3 mini-diálogos de apresentação usando o que aprendeu.",null,null],
+[8,"V","Números de 1 a 30 em inglês. Diga-os em voz alta 2 vezes. Anote os que errou.",null,null],
+[9,"G","Pronomes pessoais: I, you, he, she, it, we, they. Crie uma frase com cada pronome.",null,null],
+[10,"L","BBC Learning English: ouça o episódio 'How to greet people' e anote 5 expressões.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[11,"S","Pratique: Where are you from? / What do you do? / How old are you? com respostas suas.",null,null],
+[12,"V","Dias da semana: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.",null,null],
+[13,"W","Escreva 6 frases completas sobre você usando o verb to be. Exemplo: I am a teacher.",null,null],
+[14,"F","Assista a 15 min de uma série infantil simples em inglês: Peppa Pig, Bluey ou similar.",null,null],
+[15,"V","10 cores: red, blue, green, yellow, white, black, orange, purple, pink, brown. Use em frases.",null,null],
+[16,"G","Negativa do To Be: I'm not, You aren't, She isn't. Escreva 5 frases negativas sobre você.",null,null],
+[17,"L","Elllo.org: acesse e ouça uma conversa curta do nível 1. Anote as palavras que não entendeu.","https://elllo.org","elllo.org"],
+[18,"S","Apresente-se completamente por 1 minuto em voz alta: nome, idade, cidade, profissão, família.",null,null],
+[19,"R","ESL Fast: leia um texto curto de nível básico. Identifique todos os verbos to be.","https://eslfast.com","eslfast.com"],
+[20,"V","Família: mother, father, sister, brother, son, daughter, husband, wife, grandmother, grandfather.",null,null],
+[21,"Rev","Revisão. Faça perguntas para você mesmo: Are you...? Is your brother...? Responda em voz alta.",null,null],
+[22,"G","Perguntas com To Be: Are you tired? Is she a doctor? Were you born in Brazil? 5 perguntas.",null,null],
+[23,"F","Forvo: ouça a pronúncia correta de 10 palavras que aprendeu este mês. Repita cada uma.","https://forvo.com","forvo.com"],
+[24,"V","Meses do ano: January, February... December. Aprenda a grafia e pronuncie todos em voz alta.",null,null],
+[25,"L","6 Minute English: ouça o episódio mais recente. Anote 3 expressões novas.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[26,"S","What's today's date? Today is [day], [month] [number], 2026. Pratique com 5 datas.",null,null],
+[27,"R","British Council: leia um texto sobre apresentações e responda as perguntas do exercício.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[28,"W","Escreva um parágrafo de 5 frases apresentando um membro da sua família em inglês.",null,null],
+[29,"V","Profissões: doctor, teacher, engineer, nurse, chef, driver, student, lawyer, artist, manager.",null,null],
+[30,"F","Lyricstraining: complete a letra de outra música. Nível iniciante.","https://lyricstraining.com","lyricstraining.com"],
+[31,"Rev","Revisão do mês 1. Releia todo o vocabulário anotado e escreva 5 frases usando palavras novas.",null,null]
+]},
+{n:2,name:"FEVEREIRO",theme:"Primeiras Estruturas — Adjetivos, preposições e expressões essenciais",days:28,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"V","10 adjetivos: big, small, fast, slow, happy, sad, hot, cold, easy, difficult. Use em frases.",null,null],
+[2,"G","There is / There are: There is a cat on the sofa. There are three books. Escreva 5 frases.",null,null],
+[3,"L","Elllo: ouça uma conversa curta sobre rotinas. Anote todos os verbos que ouvir.","https://elllo.org","elllo.org"],
+[4,"S","Descreva seu quarto usando There is / There are. Mínimo 6 frases em voz alta.",null,null],
+[5,"R","ESL Fast: leia 'My Daily Routine'. Identifique os verbos e a ordem das ações.","https://eslfast.com","eslfast.com"],
+[6,"V","Horas: o'clock, half past, quarter to, quarter past. Pratique com 10 horários.",null,null],
+[7,"Rev","Revisão. Descreva onde estão 10 objetos ao seu redor usando There is/are + preposições.",null,null],
+[8,"G","Artigos a / an: a book, an apple, a university, an hour. Escreva 10 exemplos.",null,null],
+[9,"F","Mude o idioma do Netflix para inglês e coloque legenda em inglês. Assista 10 min.",null,null],
+[10,"V","Preposições de lugar: in, on, under, next to, behind, in front of, between, near.",null,null],
+[11,"L","BBC Learning English: 6 Minute Grammar. Ouça e anote a regra gramatical do episódio.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[12,"S","Descreva onde estão 10 objetos do seu quarto usando preposições de lugar em voz alta.",null,null],
+[13,"R","News in Levels: leia uma notícia do nível 1 ou 2. Depois leia em voz alta.","https://newsinlevels.com","newsinlevels.com"],
+[14,"G","Plural dos substantivos: -s (books), -es (watches), irregulares (children, feet). 10 exemplos.",null,null],
+[15,"V","Corpo humano: head, shoulder, chest, arm, hand, finger, leg, knee, foot, back.",null,null],
+[16,"W","Descreva fisicamente uma pessoa que você conhece em 5 frases. Use adjetivos e to be.",null,null],
+[17,"F","Lyricstraining: complete uma música nova. Tente um nível acima do que fez antes.","https://lyricstraining.com","lyricstraining.com"],
+[18,"V","Objetos do dia a dia: phone, bag, key, wallet, glasses, pen, notebook, cup, charger, earphone.",null,null],
+[19,"G","Pronomes possessivos: my, your, his, her, its, our, their. Escreva 7 frases completas.",null,null],
+[20,"L","VOA Learning English: ouça um story de nível básico. Tente entender sem pausar.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[21,"S","Pratique: This is my bag. That's her phone. Whose book is this? It's his. 2 minutos.",null,null],
+[22,"R","British Council: texto sobre objetos e possessivos. Faça o exercício online.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[23,"V","10 verbos no infinitivo: go, come, have, take, make, give, get, see, know, think.",null,null],
+[24,"G","Imperatives: Open the book! Don't eat that! Be quiet! Listen carefully! Escreva 8 frases.",null,null],
+[25,"F","Assista a um vídeo curto de humor em inglês no YouTube. Conseguiu entender?","https://youtube.com","YouTube"],
+[26,"W","Escreva um e-mail simples de apresentação para um amigo imaginário (6-8 linhas).",null,null],
+[27,"V","Expressões com have: have breakfast, have a shower, have fun, have a break, have a look.",null,null],
+[28,"Rev","Revisão do mês 2. Reescreva 5 frases do mês passado melhorando vocabulário e gramática.",null,null]
+]},
+{n:3,name:"MARÇO",theme:"Simple Present — Verbos de ação, rotina e negativas/perguntas",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Simple Present: I work, you work, he/she works. Aprenda a regra do -s/-es na 3ª pessoa.",null,null],
+[2,"V","Verbos de ação: wake up, get up, eat, drink, go, come, work, study, watch TV, sleep.",null,null],
+[3,"L","Elllo: ouça uma conversa sobre rotinas diárias. Anote todos os verbos no Simple Present.","https://elllo.org","elllo.org"],
+[4,"S","Descreva sua rotina de segunda-feira em inglês, do acordar ao dormir. Mínimo 2 minutos.",null,null],
+[5,"R","ESL Fast: texto sobre a rotina de uma pessoa. Liste o vocabulário que você não conhecia.","https://eslfast.com","eslfast.com"],
+[6,"G","Simple Present negativo: I don't eat meat. She doesn't work on weekends. 5 frases suas.",null,null],
+[7,"Rev","Escreva 10 frases verdadeiras sobre sua rotina usando Simple Present afirmativo e negativo.",null,null],
+[8,"V","Adv. de frequência: always (100%), usually, often, sometimes, rarely, never (0%). Faça frases.",null,null],
+[9,"G","Simple Present interrogativo: Do you...? Does she...? What do you do? Pratique 5 perguntas.",null,null],
+[10,"L","BBC 6 Minute English: episódio sobre rotinas. Anote as expressões de frequência.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[11,"S","Pergunte e responda sozinho: Do you eat breakfast? / What time do you wake up? 3 min.",null,null],
+[12,"R","News in Levels: leia e depois ouça o áudio da mesma notícia (nível 1 ou 2).","https://newsinlevels.com","newsinlevels.com"],
+[13,"V","Partes da casa: bedroom, kitchen, bathroom, living room, garden, dining room, balcony, garage.",null,null],
+[14,"W","Descreva sua casa usando There is/are e Simple Present. Mínimo 8 frases.",null,null],
+[15,"F","YouTube: assista a um vídeo sobre como descrever sua rotina em inglês. Anote 5 frases.","https://youtube.com","YouTube"],
+[16,"G","Wh-questions no Simple Present: What do you do? Where does she live? How often? 5 exemplos.",null,null],
+[17,"V","Transporte: car, bus, train, plane, bike, taxi, subway, ferry. Verbos: take, drive, ride, walk.",null,null],
+[18,"L","VOA Learning English: episódio sobre transporte ou cidade. Tente sem legenda primeiro.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[19,"S","Como você vai ao trabalho/escola? Descreva o percurso completo em inglês. 2 minutos.",null,null],
+[20,"R","British Council: texto sobre meios de transporte. Faça o exercício de compreensão.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[21,"G","Preposições de tempo: at (at 3pm), on (on Monday), in (in March, in 2026). 6 frases.",null,null],
+[22,"V","Clima e estações: sunny, rainy, cold, hot, windy, cloudy, spring, summer, autumn, winter.",null,null],
+[23,"W","Escreva 5 frases sobre o clima da sua cidade em cada estação do ano.",null,null],
+[24,"F","Lyricstraining: escolha uma música com muitos verbos no presente e complete a letra.","https://lyricstraining.com","lyricstraining.com"],
+[25,"V","Phrasal verbs básicos: wake up, get up, turn on, turn off, look for, pick up, put down.",null,null],
+[26,"G","Can / Can't: I can swim. She can't drive. Can you cook? Escreva 6 frases verdadeiras.",null,null],
+[27,"L","Elllo: ouça sobre habilidades. Anote o que as pessoas can e can't do.","https://elllo.org","elllo.org"],
+[28,"S","O que você pode e não pode fazer? Pratique com can/can't por 2 minutos.",null,null],
+[29,"R","ESL Fast: texto sobre hobbies. Identifique todos os verbos modais (can, can't).","https://eslfast.com","eslfast.com"],
+[30,"W","Escreva 6 frases sobre um amigo: o que ele pode e não pode fazer.",null,null],
+[31,"Rev","Revisão do mês 3. Crie um mini-diálogo de 10 linhas usando Simple Present e can/can't.",null,null]
+]},
+{n:4,name:"ABRIL",theme:"Rotina e Alimentação — Frequência, comida, Present Continuous",days:30,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"V","Comida: rice, beans, meat, chicken, fish, bread, egg, cheese, fruit, vegetable, salad.",null,null],
+[2,"G","Like + gerund/noun: I like eating. She loves cooking. They hate waking up early. 5 frases.",null,null],
+[3,"L","6 Minute English: episódio sobre comida ou hábitos alimentares.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","What do you like eating? What's your favorite food? Fale sobre comida por 2 minutos.",null,null],
+[5,"R","News in Levels: leia sobre hábitos alimentares em diferentes culturas.","https://newsinlevels.com","newsinlevels.com"],
+[6,"V","Refeições e expressões: have breakfast, skip lunch, grab a snack, have dinner together.",null,null],
+[7,"W","Escreva sua dieta ideal de um dia completo usando vocabulário de comida em inglês.",null,null],
+[8,"F","YouTube: assista a um episódio de 5 min de cooking show em inglês. Anote os verbos.","https://youtube.com","YouTube"],
+[9,"G","Some / Any / Much / Many / A lot of / A few / A little. Regras e 6 exemplos práticos.",null,null],
+[10,"V","Verbos de cozinha: cook, bake, fry, boil, grill, cut, chop, mix, add, pour, serve.",null,null],
+[11,"L","VOA Learning English: episódio sobre culinária ou gastronomia no mundo.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[12,"S","Explique como preparar seu prato favorito em inglês. Use verbos de cozinha. 2-3 minutos.",null,null],
+[13,"R","Pesquise uma receita simples em inglês. Identifique ingredientes, verbos e medidas.",null,null],
+[14,"G","How much / How many: How much water? How many eggs? Não contável vs contável. 5 perguntas.",null,null],
+[15,"V","Restaurante: menu, waiter, order, appetizer, main course, dessert, bill, tip, reservation.",null,null],
+[16,"W","Escreva um diálogo de 10 linhas em um restaurante. Inclua pedido, pergunta e conta.",null,null],
+[17,"F","Lyricstraining: escolha uma música animada e complete a letra. Celebre o dia 107!","https://lyricstraining.com","lyricstraining.com"],
+[18,"V","Sentimentos: happy, sad, angry, tired, excited, nervous, bored, confused, proud, relieved.",null,null],
+[19,"G","Present Continuous: I am eating. She is working. They are studying. Estrutura e uso.",null,null],
+[20,"L","BBC Learning English: episódio sobre emoções ou estado atual de algo.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[21,"S","Descreva o que você está fazendo agora, o que seu vizinho provavelmente está fazendo.",null,null],
+[22,"R","British Council: texto sobre emoções no ambiente de trabalho.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[23,"G","Simple Present vs Present Continuous. Regra + 5 pares de frases comparando os dois.",null,null],
+[24,"V","Roupas: shirt, pants, shoes, dress, jacket, hat, socks, sweater, skirt, tie, coat, boots.",null,null],
+[25,"W","Descreva o que você está usando hoje. Use Present Continuous e adjetivos de cor.",null,null],
+[26,"F","Forvo: ouça a pronúncia de 15 palavras que você acha difíceis de pronunciar.","https://forvo.com","forvo.com"],
+[27,"G","Comparative: bigger, smaller, more expensive, better, worse. Regra e 5 comparações reais.",null,null],
+[28,"V","Superlativo: the biggest, the most expensive, the best, the worst, the most interesting.",null,null],
+[29,"L","Elllo: ouça uma conversa com comparações. Anote todos os adjetivos comparativos.","https://elllo.org","elllo.org"],
+[30,"Rev","Revisão do mês 4. Escreva um parágrafo comparando sua cidade com outra cidade do Brasil.",null,null]
+]},
+{n:5,name:"MAIO",theme:"Lugares e Perguntas — Direções, wh-questions e vocabulário de lugares",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"V","Lugares: hospital, bank, airport, hotel, restaurant, pharmacy, school, church, park, mall.",null,null],
+[2,"G","Wh-questions avançadas: What time? How far? How often? How long? How much does it cost?",null,null],
+[3,"L","6 Minute English: episódio sobre viagens e destinos.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Onde você foi no último fim de semana? Descreva em inglês com detalhes. 2 minutos.",null,null],
+[5,"R","News in Levels: leia sobre uma cidade ou lugar famoso no mundo.","https://newsinlevels.com","newsinlevels.com"],
+[6,"V","Direções: go straight, turn left, turn right, cross the street, it's on the corner, keep going.",null,null],
+[7,"W","Escreva as direções de sua casa até um lugar próximo. Seja específico.",null,null],
+[8,"F","Abra o Google Maps em inglês e leia os nomes dos lugares ao redor. Aprenda 10 novos.","https://maps.google.com","Google Maps"],
+[9,"G","Preposições avançadas: between, opposite, along, towards, past, around. 6 frases.",null,null],
+[10,"V","Phrasal verbs com go: go out, go in, go up, go down, go back, go on, go through, go away.",null,null],
+[11,"L","BBC Learning English: how to ask for and give directions. Pratique depois.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[12,"S","Pratique pedir e dar direções com um percurso imaginário em sua cidade. 2 min.",null,null],
+[13,"R","British Council: texto sobre um bairro ou cidade estrangeira. Responda as perguntas.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[14,"V","Em uma loja: price, size, color, discount, exchange, receipt, cash, credit card, fitting room.",null,null],
+[15,"G","Modal 'would like': I'd like a coffee. Would you like some water? 5 frases.",null,null],
+[16,"L","Elllo: ouça uma conversa em uma loja ou mercado. Anote o vocabulário de compras.","https://elllo.org","elllo.org"],
+[17,"S","Simule uma compra em uma loja de roupas: peça o item, pergunte o preço e o tamanho.",null,null],
+[18,"R","VOA Learning English: texto sobre shopping ou hábitos de consumo.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[19,"V","Números grandes: hundred (100), thousand (1,000), million (1,000,000). Pratique preços.",null,null],
+[20,"W","Escreva um diálogo de 12 linhas em uma loja. Inclua: buscar produto, preço, pagamento.",null,null],
+[21,"F","Lyricstraining: escolha uma música sobre viagem ou lugares.","https://lyricstraining.com","lyricstraining.com"],
+[22,"G","Must / Mustn't: You must stop here. You mustn't park here. 5 regras de um lugar público.",null,null],
+[23,"V","Sinais e avisos: No entry, Exit, Emergency, Caution, Keep out, Staff only, No smoking.",null,null],
+[24,"L","6 Minute English: sobre regras e comportamento social.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[25,"S","Quais são 5 regras do seu local de trabalho ou estudo? Use must/mustn't. 2 minutos.",null,null],
+[26,"R","ESL Fast: texto sobre regras de um lugar público. Anote as expressões de obrigação.","https://eslfast.com","eslfast.com"],
+[27,"V","Saúde: doctor, nurse, hospital, medicine, prescription, headache, fever, cold, injury, recovery.",null,null],
+[28,"G","Should / Shouldn't: You should sleep 8 hours. You shouldn't skip breakfast. 5 conselhos.",null,null],
+[29,"W","Escreva 5 conselhos de saúde e bem-estar usando should/shouldn't.",null,null],
+[30,"F","Pesquise 5 curiosidades sobre um país de língua inglesa em inglês. Compartilhe com alguém.",null,null],
+[31,"Rev","Revisão do mês 5. Simule um dia no exterior: hotel, farmácia, loja, pedir direções.",null,null]
+]},
+{n:6,name:"JUNHO",theme:"Interações Reais — Hotel, viagem, trabalho e Present Perfect",days:30,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://forvo.com","forvo.com","Pronúncia correta de palavras"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"V","No hotel: check-in, check-out, room type, key card, reception, floor, elevator, room service.",null,null],
+[2,"G","Present Perfect: I have been to London. She has visited Brazil. Estrutura e uso.",null,null],
+[3,"L","BBC Learning English: diálogo em um hotel. Ouça e repita as frases do atendente.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Simule um check-in de hotel: seu nome, reserva, quarto, café da manhã. 2 minutos.",null,null],
+[5,"R","British Council: texto sobre viagens e hospedagem. Faça os exercícios de vocabulário.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[6,"G","Present Perfect com ever/never: Have you ever been to New York? I've never eaten frog.",null,null],
+[7,"V","Viagem: passport, visa, boarding pass, flight, gate, luggage, customs, arrival, departure.",null,null],
+[8,"W","Escreva sobre uma viagem que você já fez usando Present Perfect (Have you ever...?).",null,null],
+[9,"F","YouTube: assista a um vlog de viagem em inglês com legenda em inglês. Anote 10 palavras.","https://youtube.com","YouTube"],
+[10,"V","Comunicação digital: call, text, email, reply, forward, attach file, subject line, cc, send.",null,null],
+[11,"G","Present Perfect vs Simple Past: I have visited (sem tempo) / I visited in 2022.",null,null],
+[12,"L","VOA Learning English: notícia sobre tecnologia e comunicação no mundo atual.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[13,"S","Deixe uma mensagem de voz (voz real ou gravada) em inglês para alguém imaginário.",null,null],
+[14,"R","ESL Fast: texto sobre comunicação e tecnologia. Liste palavras novas e seus significados.","https://eslfast.com","eslfast.com"],
+[15,"V","Trabalho: meeting, deadline, report, presentation, colleague, manager, salary, task, project.",null,null],
+[16,"G","Have to / Don't have to: I have to wear a uniform. She doesn't have to work Saturdays.",null,null],
+[17,"L","6 Minute English: sobre trabalho remoto ou ambiente de trabalho atual.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[18,"S","Descreva sua rotina de trabalho ou estudo usando have to, don't have to e Simple Present.",null,null],
+[19,"R","News in Levels: leia sobre o mercado de trabalho ou tecnologia. Nível 2.","https://newsinlevels.com","newsinlevels.com"],
+[20,"V","Entrevista: experience, qualifications, strengths, weaknesses, salary expectations, team player.",null,null],
+[21,"W","Escreva 5 perguntas comuns em uma entrevista de emprego em inglês.",null,null],
+[22,"F","YouTube: assista a um vídeo de 5 min sobre como se sair bem em entrevistas em inglês.","https://youtube.com","YouTube"],
+[23,"G","Relative clauses básico: The man who works here. The book that I read. Escreva 4 frases.",null,null],
+[24,"V","Personalidade: friendly, shy, outgoing, patient, creative, organized, hardworking, reliable.",null,null],
+[25,"L","Elllo: ouça conversa sobre personalidades. Anote os adjetivos usados.","https://elllo.org","elllo.org"],
+[26,"S","Descreva 3 pessoas que você conhece bem: aparência e personalidade. 3 minutos.",null,null],
+[27,"R","British Council: texto sobre personalidades e trabalho em equipe.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[28,"G","Revisão de modais: can, could, must, should, would, might. 2 frases com cada.",null,null],
+[29,"V","Expressões idiomáticas: break a leg, it's a piece of cake, hit the nail on the head.",null,null],
+[30,"Rev","Revisão do mês 6. Escreva um diálogo de 15 linhas situado no trabalho ou em viagem.",null,null]
+]},
+{n:7,name:"JULHO",theme:"Simple Past I — Verbos regulares, marcadores de tempo, narrativa",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://dictionary.cambridge.org","dictionary.cambridge.org","Cambridge Dictionary — pronúncia e definição"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Simple Past verbos regulares: add -ed. worked, studied, watched, traveled. Escreva 7 frases.",null,null],
+[2,"V","10 verbos regulares no passado: worked, lived, played, visited, loved, moved, opened, stopped.",null,null],
+[3,"L","BBC Learning English: episódio sobre Simple Past com exemplos em contexto.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","O que você fez ontem? Conte do acordar até dormir usando Simple Past. 2 minutos.",null,null],
+[5,"R","ESL Fast: leia um texto de narrativa no passado. Identifique todos os verbos regulares.","https://eslfast.com","eslfast.com"],
+[6,"G","Simple Past negativo: I didn't work. She didn't study yesterday. Escreva 5 frases suas.",null,null],
+[7,"W","Escreva um parágrafo sobre o que você fez no último final de semana.",null,null],
+[8,"F","Assista a um episódio de série com legenda em inglês. Anote 10 verbos no passado.",null,null],
+[9,"G","Simple Past interrogativo: Did you go? What did she eat? Where did they go? 5 perguntas.",null,null],
+[10,"V","Marcadores de tempo passado: yesterday, last week, last month, last year, ago, in 2020.",null,null],
+[11,"L","Elllo: ouça uma história contada no passado. Anote o marcador de tempo de cada frase.","https://elllo.org","elllo.org"],
+[12,"S","Conte um evento real usando conectores: first, then, after that, suddenly, finally. 3 min.",null,null],
+[13,"R","News in Levels: leia sobre um acontecimento histórico. Identifique os verbos no passado.","https://newsinlevels.com","newsinlevels.com"],
+[14,"V","Conectores de narrativa: first, then, next, after that, suddenly, meanwhile, in the end.",null,null],
+[15,"G","Ortografia: stop-stopped, study-studied, live-lived. Regras de duplicação e troca do y.",null,null],
+[16,"W","Escreva um parágrafo sobre um dia especial na sua vida usando Simple Past.",null,null],
+[17,"F","Lyricstraining: escolha uma música com letra no passado e complete sem erros.","https://lyricstraining.com","lyricstraining.com"],
+[18,"V","10 verbos irregulares: go-went, eat-ate, have-had, see-saw, come-came, take-took.",null,null],
+[19,"G","Verbos irregulares em frases. Escreva 10 frases no Simple Past usando verbos irregulares.",null,null],
+[20,"L","VOA Learning English: ouça uma história no Simple Past. Quantos verbos você identificou?","https://learningenglish.voanews.com","voalearningenglish.com"],
+[21,"S","Pratique os 10 verbos irregulares em frases com contexto real. Diga em voz alta.",null,null],
+[22,"R","British Council: texto histórico em inglês. Faça os exercícios de compreensão.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[23,"G","Was / Were: I was tired. They were happy. Was she at home? Interrogativo e negativo.",null,null],
+[24,"V","Mais 10 irregulares: make-made, say-said, give-gave, find-found, buy-bought, keep-kept.",null,null],
+[25,"W","Conte a história de um filme ou série recente em inglês. Mínimo 100 palavras.",null,null],
+[26,"F","Cambridge Dictionary: aprenda 5 palavras novas com pronúncia, exemplo e definição.","https://dictionary.cambridge.org","dictionary.cambridge.org"],
+[27,"G","Passive voice no passado: The letter was written by her. The door was opened. 4 frases.",null,null],
+[28,"V","Sentimentos no passado: was excited, felt nervous, seemed happy, looked confused.",null,null],
+[29,"L","6 Minute English: episódio histórico ou sobre memória. Anote conectores de narrativa.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[30,"S","Conte a história resumida da sua vida em 3 minutos. Do nascimento até hoje.",null,null],
+[31,"Rev","Revisão do mês 7. Escreva uma história de 10 frases no passado com conectores.",null,null]
+]},
+{n:8,name:"AGOSTO",theme:"Simple Past II — Verbos irregulares, Past Continuous, used to",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://ted.com/talks","ted.com/talks","TED Talks com legendas em inglês"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Past Continuous: I was sleeping when she called. I was reading at 9pm. Estrutura e uso.",null,null],
+[2,"V","Verbos irregulares lista 3: write-wrote, read-read, hear-heard, speak-spoke, draw-drew.",null,null],
+[3,"L","BBC Learning English: Past Continuous em contexto real de conversação.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","O que você estava fazendo às 20h de ontem? Use Past Continuous em 5 frases.",null,null],
+[5,"R","ESL Fast: texto com narrativa no passado. Identifique Simple Past e Past Continuous.","https://eslfast.com","eslfast.com"],
+[6,"G","Past Simple vs Past Continuous: I was walking when I saw him. 5 frases suas.",null,null],
+[7,"W","Escreva uma história com virada usando Past Simple e Past Continuous.",null,null],
+[8,"F","YouTube: assista a um curta-metragem animado em inglês (máx 5 min) e resuma a história.","https://youtube.com","YouTube"],
+[9,"V","Expressões de tempo: while, when, as soon as, before, after, until, by the time.",null,null],
+[10,"G","Used to: I used to play football. I didn't use to like vegetables. O que mudou em você?",null,null],
+[11,"L","Elllo: ouça alguém falar sobre hábitos antigos e o que mudou na vida da pessoa.","https://elllo.org","elllo.org"],
+[12,"S","O que você costumava fazer de criança que não faz mais? Use 'used to'. 2 minutos.",null,null],
+[13,"R","News in Levels: artigo sobre mudanças sociais ao longo do tempo. Nível 2 ou 3.","https://newsinlevels.com","newsinlevels.com"],
+[14,"V","Reações emocionais: surprised, shocked, relieved, disappointed, proud, embarrassed, moved.",null,null],
+[15,"G","Past Perfect: I had already eaten when she arrived. Estrutura e diferença do Simple Past.",null,null],
+[16,"W","Escreva sobre um momento que mudou sua vida. Use Simple Past e Past Perfect.",null,null],
+[17,"F","TED.com: assista a um TED Talk de 5 min com legenda em inglês. Anote 5 ideias.","https://ted.com/talks","ted.com/talks"],
+[18,"V","Expressões idiomáticas sobre o passado: once upon a time, back in the day, in those days.",null,null],
+[19,"G","Revisão: Simple Past / Past Continuous / Used to / Past Perfect. 2 frases de cada.",null,null],
+[20,"L","VOA Learning English: podcast sobre um evento histórico ou mudança cultural.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[21,"S","Conte um episódio engraçado ou curioso da sua vida. Inclua emoções. 3 min.",null,null],
+[22,"R","British Council: texto biográfico sobre uma pessoa famosa. Faça os exercícios.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[23,"V","Adjetivos para histórias: dramatic, unexpected, moving, hilarious, terrifying, inspiring.",null,null],
+[24,"G","Reported Speech básico: She said (that) she was tired. He told me he didn't know.",null,null],
+[25,"W","Escreva uma biografia de 150 palavras sobre alguém que você admira.",null,null],
+[26,"F","Lyricstraining: uma música sobre memórias, nostalgia ou passado. Nível intermediário.","https://lyricstraining.com","lyricstraining.com"],
+[27,"V","Vocabulário de notícias: according to, it was reported, officials announced, experts warn.",null,null],
+[28,"G","Revisão geral do passado. Escolha o tempo verbal correto em 10 frases de contexto.",null,null],
+[29,"L","6 Minute English: episódio sobre memória, nostalgia ou mudanças no mundo.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[30,"S","Seu discurso de 3 min: infância, adolescência, vida adulta. Conecte com narrativa.",null,null],
+[31,"Rev","Revisão do mês 8. Reescreva uma das suas histórias do mês com mais detalhes.",null,null]
+]},
+{n:9,name:"SETEMBRO",theme:"Futuro: Going To — Planos, intenções e condicionais tipo 1",days:30,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://ted.com/talks","ted.com/talks","TED Talks com legendas em inglês"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Going to: I'm going to travel next month. She's going to study medicine. Estrutura.",null,null],
+[2,"V","Intenções: plan to, intend to, think about, consider, decide to, be planning on.",null,null],
+[3,"L","BBC Learning English: episódio sobre planos e intenções para o futuro.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Quais são seus planos para o próximo mês? Fale usando going to por 2 minutos.",null,null],
+[5,"R","ESL Fast: texto sobre planos e projetos de vida. Identifique expressões de futuro.","https://eslfast.com","eslfast.com"],
+[6,"G","Going to negativo: I'm not going to give up. She isn't going to come. 5 frases suas.",null,null],
+[7,"W","Escreva 5 metas concretas para o próximo mês usando going to.",null,null],
+[8,"F","YouTube: vídeo motivacional em inglês sobre metas. Anote 5 expressões úteis.","https://youtube.com","YouTube"],
+[9,"V","Eventos futuros: New Year, birthday, anniversary, graduation, festival, match, concert.",null,null],
+[10,"G","Going to para evidências visíveis: Look at those clouds - it's going to rain. 3 exemplos.",null,null],
+[11,"L","Elllo: ouça uma conversa sobre planos de viagem ou férias.","https://elllo.org","elllo.org"],
+[12,"S","Você tem uma viagem planejada? Se não, invente uma. Descreva os planos com detalhes.",null,null],
+[13,"R","News in Levels: leia sobre um evento futuro no mundo. Identifique futuro.","https://newsinlevels.com","newsinlevels.com"],
+[14,"V","Vocabulário de metas: goal, target, achieve, succeed, challenge, overcome, improve, progress.",null,null],
+[15,"G","Present Continuous para futuro marcado: I'm meeting her tomorrow. We're flying on Friday.",null,null],
+[16,"W","Escreva sua agenda da próxima semana inteira em inglês usando Present Continuous.",null,null],
+[17,"F","TED Talk sobre planejamento, foco ou futuro. Com legenda em inglês.","https://ted.com/talks","ted.com/talks"],
+[18,"V","Connectives de futuro: as soon as, when, before, after, until, once, by the time.",null,null],
+[19,"G","Going to (plano) vs Will (espontâneo): compare os dois em 5 situações diferentes.",null,null],
+[20,"L","VOA Learning English: reportagem sobre tendências do futuro ou inovação.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[21,"S","Onde você se vê em 5 anos? Fale por 3 minutos usando going to, will e talvez.",null,null],
+[22,"R","British Council: texto sobre o futuro do trabalho ou da tecnologia.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[23,"G","Condicional tipo 1: If it rains, I will stay home. If you study, you will improve. 5 frases.",null,null],
+[24,"V","Condições: if, unless (= if not), as long as, provided that, in case. Exemplos de cada.",null,null],
+[25,"W","Escreva 5 frases condicionais tipo 1 sobre situações reais na sua vida.",null,null],
+[26,"F","Lyricstraining: música sobre sonhos, futuro ou ambições.","https://lyricstraining.com","lyricstraining.com"],
+[27,"G","Condicional tipo 2: If I had more money, I would travel more. Situações hipotéticas.",null,null],
+[28,"V","Verbos de desejo e hipótese: wish, hope, imagine, dream of, wonder, would rather.",null,null],
+[29,"L","6 Minute English: episódio sobre sonhos, ambições ou o que você faria se pudesse.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[30,"Rev","Revisão do mês 9. Escreva um plano de vida com going to, will e condicionais.",null,null]
+]},
+{n:10,name:"OUTUBRO",theme:"Futuro: Will — Previsões, condicionais tipo 2 e debate",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://elllo.org","elllo.org","Conversas gravadas por nativos"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://ted.com/talks","ted.com/talks","TED Talks com legendas em inglês"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Will: previsões, promessas e ofertas espontâneas. I'll help you. It'll be fine. 5 exemplos.",null,null],
+[2,"V","Tecnologia: app, update, download, stream, upload, password, account, wireless, device.",null,null],
+[3,"L","BBC Learning English: episódio sobre o futuro da tecnologia ou inteligência artificial.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Como você acha que o mundo será em 2050? Use will e expressões de incerteza. 3 min.",null,null],
+[5,"R","News in Levels: notícia sobre inovação, IA ou tendências do futuro.","https://newsinlevels.com","newsinlevels.com"],
+[6,"G","Future Perfect: By next year, I will have finished this planner. Estrutura e 3 exemplos.",null,null],
+[7,"V","Meio ambiente: climate change, pollution, renewable energy, recycle, deforestation, carbon.",null,null],
+[8,"W","Escreva 5 previsões sobre o meio ambiente nos próximos 20 anos.",null,null],
+[9,"F","TED Talk sobre tecnologia ou sustentabilidade. Anote 5 argumentos do palestrante.","https://ted.com/talks","ted.com/talks"],
+[10,"G","Revisão completa: Will vs Going to. Escreva 3 pares de frases mostrando a diferença.",null,null],
+[11,"V","Ciência: experiment, theory, evidence, discovery, research, hypothesis, laboratory, data.",null,null],
+[12,"L","VOA Learning English: reportagem sobre ciência, saúde ou meio ambiente.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[13,"S","Você acredita que a IA vai substituir professores? Argumente por 3 minutos em inglês.",null,null],
+[14,"R","British Council: artigo de opinião em inglês. Identifique a tese e os argumentos.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[15,"G","Conditionals: tipo 1 (real), tipo 2 (hipotético). Escreva 3 frases de cada.",null,null],
+[16,"V","Probabilidade: definitely will, probably, might, may, perhaps, unlikely, I doubt (that).",null,null],
+[17,"W","Escreva um texto de opinião de 3 parágrafos sobre um tema que você defende.",null,null],
+[18,"F","YouTube: assista a 15 min de um documentário em inglês com legenda em inglês.","https://youtube.com","YouTube"],
+[19,"G","Relative clauses intermediário: the book that changed my life / the person who inspired me.",null,null],
+[20,"V","Debate: agree, disagree, in my opinion, however, on the other hand, to sum up, therefore.",null,null],
+[21,"L","6 Minute English: episódio de debate ou discussão sobre um tema atual.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[22,"S","Debate solo: trabalhar de casa é melhor do que escritório. Argumente dos dois lados.",null,null],
+[23,"R","ESL Fast: leia um artigo de opinião de nível intermediário.","https://eslfast.com","eslfast.com"],
+[24,"G","Passive voice presente e passado: English is spoken worldwide. The book was written in 1990.",null,null],
+[25,"V","Cultura e artes: music genre, exhibition, novel, sculpture, theater, screenplay, documentary.",null,null],
+[26,"W","Escreva uma crítica de 150 palavras de um filme, série ou livro que você gosta.",null,null],
+[27,"F","Lyricstraining: complete uma música de nível intermediário. Você chegou ao dia 300!","https://lyricstraining.com","lyricstraining.com"],
+[28,"G","Gerund vs Infinitive: I enjoy reading. I want to travel. Lista dos verbos mais comuns.",null,null],
+[29,"V","Verbos + gerúndio: enjoy, avoid, consider, suggest, finish, keep, miss, practice.",null,null],
+[30,"L","Elllo: conversa intermediária sobre cultura, artes ou viagens. Sem pausar.","https://elllo.org","elllo.org"],
+[31,"Rev","Revisão do mês 10. Escreva um texto de opinião de 200 palavras. Use linking words.",null,null]
+]},
+{n:11,name:"NOVEMBRO",theme:"Consolidação I — Revisão A1-A2, phrasal verbs, escrita avançada",days:30,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://apps.ankiweb.net","apps.ankiweb.net","Anki — flashcards para memorização"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://ted.com/talks","ted.com/talks","TED Talks com legendas em inglês"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"G","Escolha o ponto gramatical mais fraco do ano e revise-o do zero hoje.",null,null],
+[2,"V","Crie flashcards de 20 palavras que você sempre esquece. Use o Anki.","https://apps.ankiweb.net","apps.ankiweb.net"],
+[3,"L","BBC Learning English: ouça e transcreva 2 minutos de um episódio. Compare com original.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Fale por 5 minutos ininterruptos sobre qualquer tema. Cronômetro ligado. Não pare.",null,null],
+[5,"R","Leia um artigo de 400 palavras em inglês e escreva os 5 pontos principais.","https://newsinlevels.com","newsinlevels.com"],
+[6,"G","Escreva um parágrafo usando pelo menos 5 tempos verbais diferentes. Revise cada um.",null,null],
+[7,"W","Escreva uma carta para você mesmo daqui a 1 ano. O que você espera ter alcançado?",null,null],
+[8,"F","Assista a um episódio completo de série em inglês com legenda em inglês.",null,null],
+[9,"V","Collocations: make a decision, do homework, take a break, have a look, give a speech.",null,null],
+[10,"G","Revisão de modais: can, could, should, must, will, would, might. Uma frase de cada.",null,null],
+[11,"L","TED Talk: palestra de 10 min com legenda em inglês. Anote 5 expressões novas.","https://ted.com/talks","ted.com/talks"],
+[12,"S","Resuma o TED Talk de ontem em inglês. 3 minutos. Sem ler suas anotações.",null,null],
+[13,"R","British Council: texto de nível B1. Faça os exercícios de compreensão e vocabulário.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[14,"V","Phrasal verbs essenciais: give up, find out, take off, put on, turn up, carry on, come across.",null,null],
+[15,"G","Phrasal verbs em contexto: escreva 7 frases usando phrasal verbs diferentes.",null,null],
+[16,"W","Escreva um e-mail profissional em inglês para uma empresa imaginária.",null,null],
+[17,"F","Forvo: ouça a pronúncia de 20 palavras que você considerava difíceis.","https://forvo.com","forvo.com"],
+[18,"V","Linking words: however, therefore, in addition, on the other hand, as a result, despite.",null,null],
+[19,"G","Revisão de Present Perfect: Have you ever...? I've just finished. I've been here since 2020.",null,null],
+[20,"L","VOA Learning English: podcast de 10 min. Anote 10 palavras e estruturas novas.","https://learningenglish.voanews.com","voalearningenglish.com"],
+[21,"S","Simule uma entrevista de emprego em inglês: apresentação + resposta a 5 perguntas.",null,null],
+[22,"R","ESL Fast: leia um texto de nível intermediário-avançado sem traduzir palavra por palavra.","https://eslfast.com","eslfast.com"],
+[23,"G","Revisão de condicionais tipos 1 e 2. Escreva 3 frases de cada. Corrija sozinho.",null,null],
+[24,"W","Escreva sua autobiografia em inglês. Mínimo 200 palavras. Use todos os tempos verbais.",null,null],
+[25,"F","Lyricstraining: complete uma das músicas mais difíceis do nível escolhido.","https://lyricstraining.com","lyricstraining.com"],
+[26,"V","Expressões avançadas: bite off more than you can chew, the ball is in your court, big picture.",null,null],
+[27,"G","Passive voice avançada: The project has been completed. It will be announced tomorrow.",null,null],
+[28,"L","6 Minute English: anote cada phrasal verb e expressão idiomática que você ouvir.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[29,"S","Qual foi o maior desafio que você enfrentou? Como resolveu? 5 minutos em inglês.",null,null],
+[30,"Rev","Revisão do mês 11. Escreva 20 frases em 20 minutos. Varie tempos e estruturas.",null,null]
+]},
+{n:12,name:"DEZEMBRO",theme:"Consolidação II — Prática autônoma, teste de nível e próximos passos",days:31,
+resources:[["https://newsinlevels.com","newsinlevels.com","Notícias adaptadas por nível"],["https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish","Podcasts e vídeos da BBC"],["https://apps.ankiweb.net","apps.ankiweb.net","Anki — flashcards para memorização"],["https://lyricstraining.com","lyricstraining.com","Aprenda ouvindo músicas"],["https://ted.com/talks","ted.com/talks","TED Talks com legendas em inglês"],["https://learnenglish.britishcouncil.org","britishcouncil.org","British Council — textos e exercícios"]],
+acts:[
+[1,"V","Palavras do momento: AI, sustainable, hybrid, wellness, burnout, remote work, gig economy.",null,null],
+[2,"G","Revisão livre: escolha qualquer tópico gramatical e escreva 10 frases do zero.",null,null],
+[3,"L","BBC Learning English: episódio especial de final de ano. Anote 5 expressões de conclusão.","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[4,"S","Descreva suas maiores conquistas deste ano em inglês. 4 minutos. Seja específico.",null,null],
+[5,"R","Leia um artigo sobre os principais acontecimentos do ano em inglês.","https://newsinlevels.com","newsinlevels.com"],
+[6,"V","Revise seus flashcards no Anki. Quais palavras você ainda erra? Foque nelas.","https://apps.ankiweb.net","apps.ankiweb.net"],
+[7,"W","Escreva um plano de estudos de inglês para os próximos 3 meses.",null,null],
+[8,"F","Assista a um filme completo em inglês com legenda em inglês. Comemore o progresso!",null,null],
+[9,"G","Escreva 1 frase por tempo verbal que você aprendeu este ano. Conte quantos consegue.",null,null],
+[10,"V","Expressões de Natal e Ano Novo: Merry Christmas, Happy New Year, resolution, celebrate, toast.",null,null],
+[11,"L","TED Talk sobre reflexão, crescimento ou mudança pessoal. Assista sem pausar.","https://ted.com/talks","ted.com/talks"],
+[12,"S","Descreva um plano de 3 meses para continuar estudando inglês após o dia 365. 3 min.",null,null],
+[13,"R","British Council: faça um teste de nível online gratuito para ver onde você chegou.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[14,"G","Corrija 10 erros comuns de inglês: subject-verb agreement, articles, prepositions.",null,null],
+[15,"W","Escreva um texto se felicitando por completar o desafio. O que mudou em você?",null,null],
+[16,"F","Crie uma playlist de 10 músicas favoritas em inglês. Ouça todas e cante junto.",null,null],
+[17,"V","As 100 palavras mais usadas em inglês. Quantas você sabe usar com confiança?",null,null],
+[18,"G","Revisão de wh-questions em todos os tempos: passado, presente, futuro. 10 perguntas.",null,null],
+[19,"L","VOA Learning English: ouça um episódio completo e meça sua compreensão. Chegou a 80%?","https://learningenglish.voanews.com","voalearningenglish.com"],
+[20,"S","Grave (ou simule) um 'podcast pessoal' de 5 min sobre sua jornada de 365 dias.",null,null],
+[21,"R","Leia um capítulo curto de um livro graded reader de nível B1.","https://eslfast.com","eslfast.com"],
+[22,"V","Para continuar: fluency, accent, idiom, slang, collocations, register, discourse.",null,null],
+[23,"G","Escreva um texto livre de 300 palavras — qualquer tema, sem se preocupar com perfeição.",null,null],
+[24,"W","Escreva uma carta para alguém que vai começar o planner depois de você. Dê conselhos.",null,null],
+[25,"F","Lyricstraining: complete a música que mais te desafiou durante o ano.","https://lyricstraining.com","lyricstraining.com"],
+[26,"V","Revise os 12 temas de vocabulário do ano. Escreva 2 palavras favoritas de cada mês.",null,null],
+[27,"G","Escreva 200 palavras cobrindo o máximo de estruturas possível. Mostre tudo que aprendeu.",null,null],
+[28,"L","6 Minute English: ouça sem legenda pela primeira vez. Você consegue entender?","https://bbc.co.uk/learningenglish","bbc.co.uk/learningenglish"],
+[29,"S","Qual é a diferença entre você hoje e você no Dia 1? Fale por 5 minutos em inglês.",null,null],
+[30,"R","Leia 'How to keep improving your English beyond A2' no British Council.","https://learnenglish.britishcouncil.org","britishcouncil.org"],
+[31,"F","🎉 Parabéns! Você chegou ao Dia 365. Escreva suas 3 maiores conquistas e o que vem depois.",null,null]
+]}
+];
+
+// ─── SKILL CONFIG ──────────────────────────────────────────────────────────
+const SKILLS = {
+  V:{name:"Vocabulário",emoji:"📚",cls:"V"},
+  G:{name:"Gramática",emoji:"📝",cls:"G"},
+  L:{name:"Listening",emoji:"🎧",cls:"L"},
+  S:{name:"Speaking",emoji:"🗣️",cls:"S"},
+  R:{name:"Reading",emoji:"📖",cls:"R"},
+  W:{name:"Writing",emoji:"✍️",cls:"W"},
+  F:{name:"Fun",emoji:"🎉",cls:"F"},
+  Rev:{name:"Revisão",emoji:"🔄",cls:"Rev"}
+};
+const AI_SKILLS = new Set(["W","G","S","Rev"]);
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  done: {},        // "M-D": bool
+  habit: {},       // "M-D-SKILL": bool
+  notes: {},       // "M": string
+  goals: {},       // "M-N": {meta,acao}
+  answers: {},     // "M-D": string — student typed/recorded answer
+  feedback: {},    // "M-D": string — AI feedback received
+  startDate: null,
+  apiKey: ""
+};
+
+function loadState(){
+  try{
+    const s = localStorage.getItem("nazario365");
+    if(s) state = {...state,...JSON.parse(s)};
+  }catch(e){}
+}
+function saveState(){
+  localStorage.setItem("nazario365", JSON.stringify(state));
+  updateStats();
+}
+
+// ─── STATS ─────────────────────────────────────────────────────────────────
+function countDone(){
+  return Object.values(state.done).filter(Boolean).length;
+}
+function calcStreak(){
+  if(!state.startDate) return 0;
+  const start = new Date(state.startDate);
+  const today = new Date();
+  const diff = Math.floor((today - start)/(1000*60*60*24));
+  let streak=0;
+  for(let i=diff;i>=0;i--){
+    const d = new Date(start); d.setDate(d.getDate()+i);
+    let month=d.getMonth()+1; let day=d.getDate();
+    // find which planner day this is
+    let planDay=0;
+    MONTHS.forEach(m=>{
+      if(m.n===month) planDay=day;
+    });
+    if(state.done[`${month}-${day}`]) streak++;
+    else if(i<diff) break;
+  }
+  return streak;
+}
+function updateStats(){
+  const done=countDone();
+  document.getElementById("stat-done").textContent=done;
+  document.getElementById("stat-streak").textContent=calcStreak();
+  const pct=Math.round(done/365*100);
+  document.getElementById("stat-pct").textContent=pct+"%";
+  document.getElementById("progress-bar").style.width=pct+"%";
+  // Update month headers
+  MONTHS.forEach(m=>{
+    const el=document.getElementById(`month-pct-${m.n}`);
+    const el2=document.getElementById(`month-done-${m.n}`);
+    if(el){
+      const mDone=m.acts.filter(a=>state.done[`${m.n}-${a[0]}`]).length;
+      el.textContent=mDone+"/"+m.days;
+      if(el2) el2.textContent=Math.round(mDone/m.days*100)+"%";
+    }
+  });
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function renderLegend(){
+  const leg=document.getElementById("legend");
+  Object.entries(SKILLS).forEach(([k,v])=>{
+    const span=document.createElement("span");
+    span.className=`skill-badge skill-${k}`;
+    span.style.fontSize="0.7rem";
+    span.textContent=`${v.emoji} ${v.name}`;
+    leg.appendChild(span);
+  });
+}
+
+function renderMonths(){
+  const nav=document.getElementById("month-nav");
+  const container=document.getElementById("months-container");
+  const MONTH_NAMES=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+  MONTHS.forEach((m,idx)=>{
+    // NAV button
+    const btn=document.createElement("button");
+    btn.className="mnav-btn"+(idx===0?" active":"");
+    btn.textContent=MONTH_NAMES[idx];
+    btn.dataset.month=m.n;
+    btn.onclick=()=>showMonth(m.n);
+    nav.appendChild(btn);
+
+    // SECTION
+    const sec=document.createElement("div");
+    sec.className="month-section"+(idx===0?" active":"");
+    sec.id=`month-${m.n}`;
+    sec.innerHTML=`
+      <div class="month-header">
+        <div class="month-num">MÊS ${String(m.n).padStart(2,"0")}</div>
+        <div class="month-name">${m.name}</div>
+        <div class="month-theme">${m.theme}</div>
+        <div class="month-progress-text" id="month-done-${m.n}">0%</div>
+        <div class="month-progress-sub" id="month-pct-${m.n}">0/${m.days} dias</div>
+      </div>
+      ${renderMinimetas(m)}
+      ${renderHabitTracker(m)}
+      ${renderResources(m)}
+      ${renderActivities(m)}
+      ${renderNotes(m)}
+    `;
+    container.appendChild(sec);
+  });
+}
+
+function renderMinimetas(m){
+  let html=`<div class="minimetas"><h3>🎯 Minimetas do Mês</h3><div class="minimetas-grid">`;
+  for(let i=1;i<=4;i++){
+    const g=state.goals[`${m.n}-${i}`]||{meta:"",acao:""};
+    html+=`<div class="minimeta-item">
+      <label>Minimeta #${i}</label>
+      <input type="text" class="minimeta-meta" placeholder="Escreva sua meta..." value="${esc(g.meta)}" onchange="saveGoal(${m.n},${i},this,'meta')">
+      <input type="text" class="minimeta-meta acao" placeholder="Ação para alcançar..." value="${esc(g.acao)}" onchange="saveGoal(${m.n},${i},this,'acao')">
+    </div>`;
+  }
+  html+=`</div></div>`;
+  return html;
+}
+
+function renderHabitTracker(m){
+  const skillKeys=Object.keys(SKILLS);
+  let html=`<div class="habit-tracker"><h3>📅 Habit Tracker — marque os dias que estudou</h3>`;
+  skillKeys.forEach(sk=>{
+    html+=`<div class="habit-row"><span class="habit-label">${SKILLS[sk].emoji} ${SKILLS[sk].name}</span><div class="habit-dots">`;
+    for(let d=1;d<=m.days;d++){
+      const key=`${m.n}-${d}-${sk}`;
+      const done=state.habit[key]?"done":"";
+      html+=`<button class="habit-dot ${done}" title="Dia ${d}" onclick="toggleHabit(${m.n},${d},'${sk}',this)"></button>`;
+    }
+    html+=`</div></div>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+function renderResources(m){
+  let html=`<div class="resources-section"><h3>🔗 Recursos deste mês</h3><div class="resources-grid">`;
+  m.resources.forEach(([url,display,desc])=>{
+    html+=`<a class="resource-link" href="${url}" target="_blank" rel="noopener">
+      <span class="r-url">🌐 ${display}</span>
+      <span class="r-desc">${desc}</span>
+    </a>`;
+  });
+  html+=`</div></div>`;
+  return html;
+}
+
+function renderActivities(m){
+  let html=`<div class="activities-card">
+    <div class="activities-header"><span>Atividades do Mês</span><span>✓ = Concluído</span></div>`;
+  m.acts.forEach(([day,skill,task,url,urlText])=>{
+    const key=`${m.n}-${day}`;
+    const done=state.done[key];
+    const sk=SKILLS[skill]||SKILLS["V"];
+    const savedAnswer=esc(state.answers&&state.answers[key]||"");
+    const savedFeedback=state.feedback&&state.feedback[key]||"";
+    const hint=PRACTICE_HINTS[skill]||"Escreva sua resposta aqui...";
+    TASK_MAP[key]=task;
+    html+=`<div class="activity-wrap" id="wrap-${key}">
+      <div class="activity-row${done?" done":""}" id="row-${key}">
+        <div class="check-circle${done?" done":""}" onclick="toggleDone(${m.n},${day},this)"></div>
+        <div class="day-badge">${String(day).padStart(2,"0")}</div>
+        <div class="activity-content">
+          <span class="skill-badge skill-${skill}" style="margin-bottom:6px;display:inline-block">${sk.emoji} ${sk.name}</span>
+          <div class="activity-task">${task}</div>
+          <div class="activity-actions">
+            ${url?`<a class="btn-link" href="${url}" target="_blank" rel="noopener"><span class="icon">🔗</span>${urlText}</a>`:""}
+            <button class="btn-practice" id="pracbtn-${key}" onclick="togglePractice('${key}')">📝 Praticar</button>
+          </div>
+        </div>
+      </div>
+      <div class="practice-panel" id="practice-${key}">
+        <div class="practice-header">
+          ✏️ Sua prática — Dia ${day}
+          <button class="close-panel" onclick="togglePractice('${key}')">✕ fechar</button>
+        </div>
+        <textarea class="practice-textarea" id="ans-${key}" placeholder="${hint}" oninput="saveAnswer('${key}',this)">${savedAnswer}</textarea>
+        <div class="practice-controls">
+          <button class="mic-btn" id="mic-${key}" onclick="toggleMic('${key}')">🎤 Gravar</button>
+          <button class="btn-check-inline" id="aibtn-${key}" onclick="checkInline('${key}','${skill}')">✨ Verificar com IA</button>
+        </div>
+        <div class="ai-inline-loading" id="aiload-${key}"><div class="spinner"></div><span>Verificando com a IA...</span></div>
+        <div class="ai-inline-response" id="airesp-${key}" style="${savedFeedback?"display:block":"display:none"}">${esc(savedFeedback)}</div>
+        <div class="ai-inline-fallback" id="aifb-${key}">📋 Prompt copiado! <a href="https://claude.ai" target="_blank">Abrir Claude.ai</a> e colar (Ctrl+V).</div>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+function renderNotes(m){
+  const val=state.notes[m.n]||"";
+  return `<div class="notes-section">
+    <h3>📝 Anotações do mês</h3>
+    <textarea placeholder="Escreva aqui suas anotações, palavras novas, reflexões..." onchange="saveNote(${m.n},this)">${esc(val)}</textarea>
+  </div>`;
+}
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+
+// ─── INTERACTIONS ───────────────────────────────────────────────────────────
+function showMonth(n){
+  document.querySelectorAll(".month-section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".mnav-btn").forEach(b=>{
+    b.classList.toggle("active",parseInt(b.dataset.month)===n);
+  });
+  const sec=document.getElementById(`month-${n}`);
+  if(sec){
+    sec.classList.add("active");
+    sec.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  // Scroll nav button into view
+  const navBtn=document.querySelector(`.mnav-btn[data-month="${n}"]`);
+  if(navBtn) navBtn.scrollIntoView({behavior:"smooth",inline:"center"});
+}
+
+function toggleDone(month,day,el){
+  const key=`${month}-${day}`;
+  state.done[key]=!state.done[key];
+  const done=state.done[key];
+  el.classList.toggle("done",done);
+  const row=document.getElementById(`row-${key}`);
+  if(row) row.classList.toggle("done",done);
+  saveState();
+  toast(done?"✅ Dia marcado como concluído!":"↩ Dia desmarcado.");
+}
+
+function toggleHabit(month,day,skill,el){
+  const key=`${month}-${day}-${skill}`;
+  state.habit[key]=!state.habit[key];
+  el.classList.toggle("done",state.habit[key]);
+  saveState();
+}
+
+function saveGoal(month,num,el,field){
+  const k=`${month}-${num}`;
+  if(!state.goals[k]) state.goals[k]={meta:"",acao:""};
+  state.goals[k][field]=el.value;
+  saveState();
+}
+
+function saveNote(month,el){
+  state.notes[month]=el.value;
+  saveState();
+}
+
+// ─── AI MODAL ───────────────────────────────────────────────────────────────
+let currentTask="";
+function openAI(task){
+  currentTask=task;
+  document.getElementById("ai-task-text").textContent=task;
+  document.getElementById("ai-answer").value="";
+  document.getElementById("ai-response").style.display="none";
+  document.getElementById("ai-loading").style.display="none";
+  document.getElementById("ai-fallback").style.display="none";
+  document.getElementById("ai-response-box").textContent="";
+  document.getElementById("ai-modal").classList.add("open");
+}
+function closeAI(){
+  document.getElementById("ai-modal").classList.remove("open");
+}
+
+function generatePrompt(task,answer){
+  return `Você é o Prof. Matheus Nazário, professor de inglês especialista em ajudar brasileiros. Revise a resposta de um aluno que está no nível A1-B1.
+
+📌 TAREFA DO DIA: ${task}
+
+✍️ RESPOSTA DO ALUNO:
+${answer}
+
+Por favor, forneça feedback estruturado em português brasileiro:
+
+1. ✅ **O que está correto** — elogie os acertos
+2. 🔧 **Correções** — liste os erros com a forma correta e uma breve explicação
+3. 💡 **Versão melhorada** — reescreva a resposta do aluno de forma correta e natural
+4. ⭐ **Nota** — avalie de 1 a 5 estrelas com comentário breve
+5. 🚀 **Dica bônus** — uma expressão ou estrutura extra relacionada ao tema
+
+Seja gentil, didático e use emojis para tornar o feedback divertido e motivador! Responda em português mas mantenha os exemplos em inglês.`;
+}
+
+async function correctWithAI(){
+  const answer=document.getElementById("ai-answer").value.trim();
+  if(!answer){toast("✏️ Escreva sua resposta primeiro!");return;}
+  const apiKey=state.apiKey;
+  const prompt=generatePrompt(currentTask,answer);
+
+  if(!apiKey){
+    // No API key: copy prompt and open Claude.ai
+    await copyPromptToClipboard(prompt);
+    document.getElementById("ai-fallback").style.display="block";
+    window.open("https://claude.ai","_blank");
+    return;
+  }
+
+  // Try Anthropic API
+  document.getElementById("ai-loading").style.display="flex";
+  document.getElementById("btn-correct").disabled=true;
+  document.getElementById("ai-response").style.display="none";
+  document.getElementById("ai-fallback").style.display="none";
+
+  try{
+    const resp=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "x-api-key":apiKey,
+        "anthropic-version":"2023-06-01"
+      },
+      body:JSON.stringify({
+        model:"claude-haiku-4-5-20251001",
+        max_tokens:1500,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    if(!resp.ok) throw new Error("API error "+resp.status);
+    const data=await resp.json();
+    const text=data.content[0].text;
+    document.getElementById("ai-response-box").textContent=text;
+    document.getElementById("ai-response").style.display="block";
+  }catch(e){
+    // CORS or other error — fallback
+    await copyPromptToClipboard(prompt);
+    document.getElementById("ai-fallback").style.display="block";
+    window.open("https://claude.ai","_blank");
+  }finally{
+    document.getElementById("ai-loading").style.display="none";
+    document.getElementById("btn-correct").disabled=false;
+  }
+}
+
+async function copyPrompt(){
+  const answer=document.getElementById("ai-answer").value.trim();
+  const prompt=generatePrompt(currentTask,answer||"[escreva sua resposta aqui]");
+  await copyPromptToClipboard(prompt);
+  window.open("https://claude.ai","_blank");
+  document.getElementById("ai-fallback").style.display="block";
+}
+
+async function copyPromptToClipboard(text){
+  try{await navigator.clipboard.writeText(text);}catch(e){}
+  toast("📋 Prompt copiado para o clipboard!");
+}
+
+// ─── PRACTICE PANEL ────────────────────────────────────────────────────────
+const TASK_MAP = {}; // key "M-D" → task text, populated during render
+
+const PRACTICE_HINTS = {
+  V:"Escreva frases usando as palavras novas. Ex: I have a big book and a small pen.",
+  G:"Escreva as frases pedidas na atividade. Tente sem olhar as regras!",
+  L:"Anote palavras que ouviu, expressões novas. What did you understand?",
+  S:"🎤 Clique em Gravar e pratique em inglês em voz alta! A IA corrige o que você disse.",
+  R:"Resuma o texto em inglês ou responda as perguntas da atividade.",
+  W:"Escreva sua resposta completa aqui. Não tenha medo de errar!",
+  F:"O que você aprendeu? Escreva uma reflexão em inglês!",
+  Rev:"Escreva sua revisão completa. Use todas as estruturas aprendidas no mês!"
+};
+
+function escAttr(s){return esc(s).replace(/'/g,"&#39;");}
+
+function togglePractice(key){
+  const panel=document.getElementById(`practice-${key}`);
+  const btn=document.getElementById(`pracbtn-${key}`);
+  if(!panel) return;
+  const isOpen=panel.classList.toggle("open");
+  if(btn) btn.classList.toggle("active",isOpen);
+  if(isOpen){
+    const ta=document.getElementById(`ans-${key}`);
+    if(ta) setTimeout(()=>ta.focus(),50);
+  }
+}
+
+function saveAnswer(key,ta){
+  if(!state.answers) state.answers={};
+  state.answers[key]=ta.value;
+  saveState();
+}
+
+// ─── MIC ─────────────────────────────────────────────────────────────────────
+let recognition=null;
+let activeMicKey=null;
+
+function toggleMic(key){
+  if(activeMicKey===key) stopMic();
+  else { if(activeMicKey) stopMic(); startMic(key); }
+}
+
+function startMic(key){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast("⚠️ Microfone não suportado. Use Chrome ou Edge.");return;}
+  recognition=new SR();
+  recognition.lang="en-US";
+  recognition.continuous=true;
+  recognition.interimResults=true;
+  const ta=document.getElementById(`ans-${key}`);
+  let finalText=ta?ta.value:"";
+  recognition.onresult=function(e){
+    let interim="";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal) finalText+=e.results[i][0].transcript+" ";
+      else interim+=e.results[i][0].transcript;
+    }
+    if(ta){ta.value=finalText+interim; saveAnswer(key,ta);}
+  };
+  recognition.onerror=function(e){
+    if(e.error!=="no-speech"){toast("Erro no microfone: "+e.error); stopMic();}
+  };
+  recognition.onend=function(){
+    if(activeMicKey===key) recognition.start();
+  };
+  recognition.start();
+  activeMicKey=key;
+  const btn=document.getElementById(`mic-${key}`);
+  if(btn){btn.classList.add("recording"); btn.innerHTML="⏹ Parar";}
+  toast("🎤 Gravando em inglês... fale agora!");
+}
+
+function stopMic(){
+  if(recognition){recognition.onend=null; recognition.stop(); recognition=null;}
+  if(activeMicKey){
+    const btn=document.getElementById(`mic-${activeMicKey}`);
+    if(btn){btn.classList.remove("recording"); btn.innerHTML="🎤 Gravar";}
+    activeMicKey=null;
+  }
+}
+
+// ─── INLINE AI ───────────────────────────────────────────────────────────────
+async function checkInline(key,skill){
+  stopMic();
+  const task=TASK_MAP[key]||"";
+  const ta=document.getElementById(`ans-${key}`);
+  const answer=ta?ta.value.trim():"";
+  if(!answer){toast("✏️ Escreva ou grave sua resposta primeiro!");return;}
+
+  const loadEl=document.getElementById(`aiload-${key}`);
+  const respEl=document.getElementById(`airesp-${key}`);
+  const fallEl=document.getElementById(`aifb-${key}`);
+  const btn=document.getElementById(`aibtn-${key}`);
+
+  if(loadEl) loadEl.classList.add("active");
+  if(respEl) respEl.style.display="none";
+  if(fallEl) fallEl.style.display="none";
+  if(btn) btn.disabled=true;
+
+  const prompt=generatePrompt(task,answer);
+
+  try{
+    const resp=await fetch("/.netlify/functions/correct",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({prompt})
+    });
+    if(!resp.ok) throw new Error("proxy "+resp.status);
+    const data=await resp.json();
+    if(!data.text) throw new Error("empty");
+    if(!state.feedback) state.feedback={};
+    state.feedback[key]=data.text;
+    saveState();
+    if(respEl){respEl.textContent=data.text; respEl.style.display="block";}
+    if(loadEl) loadEl.classList.remove("active");
+    if(btn) btn.disabled=false;
+    return;
+  }catch(e){}
+
+  await copyPromptToClipboard(prompt);
+  if(fallEl) fallEl.style.display="block";
+  if(loadEl) loadEl.classList.remove("active");
+  if(btn) btn.disabled=false;
+  window.open("https://claude.ai","_blank");
+}
+
+// ─── SETTINGS ───────────────────────────────────────────────────────────────
+function openSettings(){
+  document.getElementById("cfg-start-date").value=state.startDate||"";
+  document.getElementById("cfg-api-key").value=state.apiKey||"";
+  document.getElementById("settings-modal").classList.add("open");
+}
+function closeSettings(){
+  document.getElementById("settings-modal").classList.remove("open");
+}
+function saveSettings(){
+  state.startDate=document.getElementById("cfg-start-date").value;
+  state.apiKey=document.getElementById("cfg-api-key").value;
+  saveState();
+  closeSettings();
+  toast("✅ Configurações salvas!");
+}
+
+// ─── TOAST ──────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove("show"),2800);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+loadState();
+renderLegend();
+renderMonths();
+updateStats();
+
+// Close modals on backdrop click
+document.getElementById("ai-modal").addEventListener("click",function(e){
+  if(e.target===this) closeAI();
+});
+document.getElementById("settings-modal").addEventListener("click",function(e){
+  if(e.target===this) closeSettings();
+});
+
+// Auto-navigate to current study day if start date is set
+if(state.startDate){
+  const start=new Date(state.startDate);
+  const today=new Date();
+  const dayNum=Math.floor((today-start)/(1000*60*60*24))+1;
+  if(dayNum>=1&&dayNum<=365){
+    let cumul=0;
+    for(const m of MONTHS){
+      if(cumul+m.days>=dayNum){
+        setTimeout(()=>showMonth(m.n),100);
+        break;
+      }
+      cumul+=m.days;
+    }
+  }
+}
+</script>
+</body>
+</html>
